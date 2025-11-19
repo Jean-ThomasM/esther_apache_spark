@@ -1,0 +1,14 @@
+[project]
+name = "esther-apache-spark"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipython>=9.7.0",
+    "ju>=0.1.31",
+    "jupyter>=1.1.1",
+    "pandas>=2.3.3",
+    "path>=17.1.1",
+    "pyspark>=4.0.1",
+]
