@@ -19,7 +19,7 @@ dev = [
 ]
 
 [tool.semantic_release]
-branch = "main"
+branch = "master"
 version_toml = "pyproject.toml:project.version"
 commit_parser = "angular"
 changelog_file = "CHANGELOG.md"
