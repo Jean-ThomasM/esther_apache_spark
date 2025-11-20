@@ -19,13 +19,16 @@ dev = [
 ]
 
 [tool.semantic_release]
-branches = [
-    "master",
-    { name = "develop", prerelease = true },
-]
-version_toml = "pyproject.toml:project.version"
-commit_parser = "angular"
+version_toml = ["pyproject.toml:project.version"]
+commit_parser = "conventional"
 changelog_file = "CHANGELOG.md"
 build_command = "uv build"
 upload_to_repository = false
 upload_to_release = false
+
+[[tool.semantic_release.branches]]
+name = "master"
+
+[[tool.semantic_release.branches]]
+name = "develop"
+prerelease = true
