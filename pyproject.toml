@@ -20,6 +20,8 @@ dev = [
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
+version_source = "tag_or_file"
+tag_format = "v{version}"
 commit_parser = "conventional"
 changelog_file = "CHANGELOG.md"
 build_command = "uv build"
