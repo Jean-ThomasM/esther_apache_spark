@@ -26,9 +26,9 @@ build_command = "uv build"
 upload_to_repository = false
 upload_to_release = false
 
-[[tool.semantic_release.branches]]
-name = "master"
+[tool.semantic_release.branches.master]
+match = "master"
 
-[[tool.semantic_release.branches]]
-name = "develop"
+[tool.semantic_release.branches.develop]
+match = "develop"
 prerelease = true
