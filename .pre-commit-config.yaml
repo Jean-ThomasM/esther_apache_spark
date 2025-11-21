@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace      # enlève les espaces en fin de ligne
+      - id: end-of-file-fixer        # s'assure qu'il y a un \n à la fin des fichiers
+      - id: check-yaml               # valide les fichiers .yaml/.yml
+      - id: check-added-large-files  # évite d'ajouter d'énormes fichiers par erreur
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9  # ou une version stable récente
+    hooks:
+      - id: ruff
+        args: ["--fix"]   # essaie d'auto-corriger ce qu'il peut
+      - id: ruff-format
+
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.11.0
+  #   hooks:
+  #     - id: mypy                # vérifie les types avec mypy (si des annotations de type sont présentes)
+  #       args: ["--ignore-missing-imports"] # ignore les imports manquants pour éviter trop d'erreurs
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        types: [python]
+        pass_filenames: false
+
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.6.0
+  #   hooks:
+  #     - id: detect-private-key # évite d'ajouter des clés privées par erreur
