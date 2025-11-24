@@ -32,10 +32,15 @@ Pour les tests :
 - le fichier conftest.py permet de configurer l'affichage des tests, il est automatiquement pris en compte par pytest
 - le fichier conftest.py modifie le sys.path pour permettre l'import des fonctions des pipelines pandas & pyspark comme des modules, si le fichier test_pipeline_equivalences.py est lancé directement, et que conftest.py n'a jamais été lancé (tout seul ou via pytest), il est probable que test_pipeline_equivalence.py retourne une erreur d'import impossible
 
+Pour le pre-commit :
+- il est configuré dans le fichier .pre-commit-config.yaml
+- il effectue plusieurs séries de vérifications de formatage, validation des fichiers
+- pytest est inclus dans le pre-commit
+
 
 Pour lancer les tests, deux possibilités :
-- uv run pytest -> lance uniquement le test
-- uv run pre-commit (évite de faire des commit pour rien, mais nécessite git add . avant) -> lance toutes les actions du fichier .pre-commit-config.yaml
+- "uv run pytest" -> lance uniquement le test
+- "git add ." puis "uv run pre-commit" -> faire git-> lance toutes les actions du fichier .pre-commit-config.yaml
 
 Le pre-commit se déclenche lors des commit, donc :
 - git add .
