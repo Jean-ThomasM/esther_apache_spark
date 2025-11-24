@@ -10,7 +10,9 @@ dependencies = [
     "jupyter>=1.1.1",
     "pandas>=2.3.3",
     "path>=17.1.1",
+    "pre-commit>=4.4.0",
     "pyspark>=4.0.1",
+    "pytest>=9.0.1",
 ]
 
 [project.optional-dependencies]
@@ -19,10 +21,18 @@ dev = [
 ]
 
 [tool.semantic_release]
-branch = "master"
-version_toml = "pyproject.toml:project.version"
-commit_parser = "angular"
+version_toml = ["pyproject.toml:project.version"]
+version_source = "tag_or_file"
+tag_format = "v{version}"
+commit_parser = "conventional"
 changelog_file = "CHANGELOG.md"
 build_command = "uv build"
 upload_to_repository = false
 upload_to_release = false
+
+[tool.semantic_release.branches.master]
+match = "master"
+
+[tool.semantic_release.branches.develop]
+match = "develop"
+prerelease = true
