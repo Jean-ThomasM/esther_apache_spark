@@ -17,9 +17,6 @@ from pyspark.sql.functions import (
     lower,
     trim,
     lit,
-    to_date,
-    coalesce,
-    date_format,
 )
 from pyspark.sql.window import Window
 
@@ -158,20 +155,12 @@ def compute_per_order(dedup_df: SparkDataFrame) -> SparkDataFrame:
 def join_customers_and_add_date(
     per_order_df: SparkDataFrame, customers_clean: SparkDataFrame
 ) -> SparkDataFrame:
-    """
-    Joint les clients et ajoute une colonne order_date (yyyy-MM-dd) en pur Spark,
-    compatible avec les deux formats possibles de created_at :
-    - 'YYYY-MM-DD HH:MM:SS'
-    - 'YYYY-MM-DD'
-    """
-    joined = per_order_df.join(customers_clean, on="customer_id", how="left").filter(
-        col("is_active") == True  # noqa: E712
+    return (
+        per_order_df.join(customers_clean, on="customer_id", how="left")
+        .filter(col("is_active") == True)  # noqa: E712
+        # created_at est de la forme 'YYYY-MM-DD HH:MM:SS' : on garde la partie date
+        .withColumn("order_date", col("created_at").cast("string").substr(1, 10))
     )
-    parsed_date = coalesce(
-        to_date(col("created_at"), "yyyy-MM-dd HH:mm:ss"),
-        to_date(col("created_at"), "yyyy-MM-dd"),
-    )
-    return joined.withColumn("order_date", date_format(parsed_date, "yyyy-MM-dd"))
 
 
 def merge_refunds(
@@ -244,7 +233,7 @@ def export_daily_csvs(
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     for date_value, sub_df in agg_pd.groupby("date"):
-        out_path = output_dir / f"daily_summary_{date_value.replace('-', '')}.csv"
+        out_path = output_dir / f"daily_summary_{date_value.replace('-', '')}.csv"  # type: ignore
         sub_df[
             [
                 "date",
